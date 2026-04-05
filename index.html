@@ -12,39 +12,53 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#newsBox {
+/* الحاوية */
+#newsContainer {
     width: 95%;
     margin: 100px auto;
+    display: flex;
+}
+
+/* الساعة */
+#clockBox {
+    width: 170px;
+    background: linear-gradient(135deg, #000, #333);
+    color: #fff2b0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius:0px 14px 14px 0px;
+    font-family: Tahoma;
+    border: 2px solid #d4af37; /* بوردر ذهبي */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+}
+
+#time {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#date {
+    font-size: 13px;
+}
+
+/* شريط الأخبار */
+#newsBox {
+    flex: 1;
     overflow: hidden;
     background: linear-gradient(135deg, #4b0f0f, #7a1c1c, #c9a646);
-    color: #f5e6c8; 
-    border-radius: 14px;
+    color: #f5e6c8;
+    border-radius: 14px 0px 0px 14px;
     display: flex;
-    align-items: center; /* النص واللوجو في منتصف العمودي */
-    justify-content: flex-start; /* يبدأ من جهة اليمين */
+    align-items: center;
     padding: 12px 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
-    font-family: "Georgia", "Times New Roman", serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    height: 50px;
-    position: relative;
+    font-family: "Georgia", serif;
+    border: 2px solid #d4af37; /* بوردر */
+    border-right: none; /* علشان يلتحم مع الساعة */
 }
 
-#newsBox::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    padding: 2px;
-    background: linear-gradient(45deg, #d4af37, #fff2b0, #d4af37);
-    -webkit-mask: 
-        linear-gradient(#000 0 0) content-box, 
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-}
-
+/* الحركة */
 #tickerTrack {
     display: flex;
     white-space: nowrap;
@@ -52,19 +66,18 @@ body {
 
 .tickerItem {
     display: inline-flex;
-    align-items: center; 
-    justify-content: center;
+    align-items: center;
     padding: 0 40px;
-    font-size: 16px;
     gap: 10px;
 }
 
+/* اللوجو */
 .logo {
-    width: 1.2em;
-    height: 1.2em;
-    object-fit: contain;
+    width: 2em;
+    height: 2em;
 }
 
+/* التحكم */
 .controls {
     margin-top: 20px;
 }
@@ -82,104 +95,83 @@ button {
     border-radius: 20px;
     border: none;
     background-color: rgb(0, 255, 51);
-    transition: .3s;
     cursor: pointer;
 }
 
-button:hover{
+button:hover {
     background-color: rgb(0, 207, 41);
-    transform: translateY(-2px);
 }
 
-.footer-bottom{
-    font-family: Georgia, 'Times New Roman', Times, serif;   
-    font-size: larger; 
-    text-align:center;
-    margin-top:25px;
-    padding-top:15px;
-    border-top:1px solid #333;
-    color:#888;
-}
-    /* إعدادات للشاشات الصغيرة */
-@media (max-width: 768px) {
-    #newsBox {
-        font-size: 14px; /* تصغير حجم الخط */
-        padding: 8px 10px;
-        height: 40px; /* تقليل ارتفاع الشريط */
-    }
-
-    .tickerItem {
-        padding: 0 20px; /* تقليل الفراغ بين العناصر */
-        font-size: 14px;
-        gap: 5px;
-    }
-
-    .logo {
-        width: 1em;
-        height: 1em;
-    }
-
-    .controls input,
-    .controls button {
-        padding: 8px;
-        font-size: 14px;
-    }
-    
-    .footer-bottom {
-        font-size: medium;
-        padding-top: 10px;
-        margin-top: 15px;
-    }
+/* فوتر */
+.footer-bottom {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    color: #888;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="controls">
     <input type="text" id="textInput" placeholder="اكتب الخبر">
-    <button onclick="changeText()">تغيير النص</button>
-    <br>
+    <button onclick="changeText()">تغيير النص</button><br>
+
     <input type="number" id="speedInput" placeholder="سرعة">
-    <button onclick="changeSpeed()">تغيير السرعة</button>
-    <br>
+    <button onclick="changeSpeed()">تغيير السرعة</button><br>
+
     <input type="number" id="heightInput" placeholder="ارتفاع">
-    <button onclick="changeHeight()">تغيير الارتفاع</button>
-    <br>
-    <input type="number" id="fontSizeInput" placeholder="حجم الخط (px)">
-    <button onclick="changeFontSize()">تغيير حجم الخط</button>
+    <button onclick="changeHeight()">تغيير الارتفاع</button><br>
+
+    <input type="number" id="fontSizeInput" placeholder="حجم الخط">
+    <button onclick="changeFontSize()">تغيير الخط</button><br>
+
+    <!-- زر إخفاء/إظهار الساعة -->
+    <button onclick="toggleClock()">إظهار / إخفاء الساعة</button>
 </div>
 
-<div id="newsBox">
-    <div id="tickerTrack">
-        <div class="tickerItem" id="content"></div>
+<div id="newsContainer">
+
+    <div id="clockBox">
+        <div id="time"></div>
     </div>
+
+    <div id="newsBox">
+        <div id="tickerTrack">
+            <div class="tickerItem" id="content"></div>
+        </div>
+    </div>
+
 </div>
 
 <div class="footer-bottom">
- Developed by mafde
+Developed by mafde
 </div>
 
 <script>
 let track = document.getElementById("tickerTrack");
-let content = document.getElementById("content");
 let box = document.getElementById("newsBox");
+let clockBox = document.getElementById("clockBox");
 
 let speed = 1;
 let x = 0;
 let currentFontSize = 16;
 let currentText = "خبر عاجل: أهلاً بك في نشرة الأخبار";
 
-// تحميل البيانات المحفوظة
+/* تحميل */
 function loadSettings() {
     if (localStorage.getItem("text")) currentText = localStorage.getItem("text");
     if (localStorage.getItem("speed")) speed = parseFloat(localStorage.getItem("speed"));
     if (localStorage.getItem("fontSize")) currentFontSize = parseFloat(localStorage.getItem("fontSize"));
     if (localStorage.getItem("height")) box.style.height = localStorage.getItem("height") + "px";
+
+    if (localStorage.getItem("clockVisible") === "false") {
+        clockBox.style.display = "none";
+    }
 }
 
-// حفظ البيانات
+/* حفظ */
 function saveSettings() {
     localStorage.setItem("text", currentText);
     localStorage.setItem("speed", speed);
@@ -187,7 +179,18 @@ function saveSettings() {
     localStorage.setItem("height", box.offsetHeight);
 }
 
-// تكرار النص لملء الشريط
+/* إظهار/إخفاء الساعة */
+function toggleClock() {
+    if (clockBox.style.display === "none") {
+        clockBox.style.display = "flex";
+        localStorage.setItem("clockVisible", "true");
+    } else {
+        clockBox.style.display = "none";
+        localStorage.setItem("clockVisible", "false");
+    }
+}
+
+/* تكرار */
 function duplicateContent() {
     track.innerHTML = "";
 
@@ -208,7 +211,7 @@ function duplicateContent() {
     }
 }
 
-// الحركة لليمين
+/* الحركة */
 function animate() {
     x += speed;
     let first = track.children[0];
@@ -223,7 +226,7 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// تغيير النص
+/* باقي التحكم */
 function changeText() {
     let text = document.getElementById("textInput").value;
     if(text !== ""){
@@ -233,7 +236,6 @@ function changeText() {
     }
 }
 
-// تغيير السرعة
 function changeSpeed() {
     let s = document.getElementById("speedInput").value;
     if(s > 0){
@@ -242,7 +244,6 @@ function changeSpeed() {
     }
 }
 
-// تغيير الارتفاع
 function changeHeight() {
     let h = document.getElementById("heightInput").value;
     if(h > 0){
@@ -251,7 +252,6 @@ function changeHeight() {
     }
 }
 
-// تغيير حجم الخط
 function changeFontSize() {
     let size = document.getElementById("fontSizeInput").value;
     if(size > 0){
@@ -261,10 +261,24 @@ function changeFontSize() {
     }
 }
 
-// تشغيل
+/* الساعة */
+function updateClock() {
+    let now = new Date();
+
+    let time = now.toLocaleTimeString("ar-EG");
+    let date = now.toLocaleDateString("ar-EG");
+
+    document.getElementById("time").innerText = time;
+    document.getElementById("date").innerText = date;
+}
+
+setInterval(updateClock, 1000);
+
+/* تشغيل */
 loadSettings();
 duplicateContent();
 animate();
+updateClock();
 </script>
 
 </body>
