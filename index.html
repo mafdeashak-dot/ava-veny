@@ -100,6 +100,37 @@ button:hover{
     border-top:1px solid #333;
     color:#888;
 }
+    /* إعدادات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    #newsBox {
+        font-size: 14px; /* تصغير حجم الخط */
+        padding: 8px 10px;
+        height: 40px; /* تقليل ارتفاع الشريط */
+    }
+
+    .tickerItem {
+        padding: 0 20px; /* تقليل الفراغ بين العناصر */
+        font-size: 14px;
+        gap: 5px;
+    }
+
+    .logo {
+        width: 1em;
+        height: 1em;
+    }
+
+    .controls input,
+    .controls button {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .footer-bottom {
+        font-size: medium;
+        padding-top: 10px;
+        margin-top: 15px;
+    }
+}
 </style>
 
 </head>
