@@ -37,6 +37,8 @@ body {
 #time {
     font-size: 20px;
     font-weight: bold;
+      direction: ltr;
+
 }
 
 #date {
@@ -94,12 +96,14 @@ button {
     padding: 10px 20px;
     border-radius: 20px;
     border: none;
-    background-color: rgb(0, 255, 51);
+    background-color: rgb(0, 225, 255);
     cursor: pointer;
+    transition: .5s;
 }
 
 button:hover {
-    background-color: rgb(0, 207, 41);
+    transform: translateY(-2px);
+    background-color: rgb(0, 105, 119);
 }
 
 /* فوتر */
@@ -109,6 +113,7 @@ button:hover {
     border-top: 1px solid #333;
     color: #888;
 }
+
 </style>
 </head>
 
@@ -157,7 +162,7 @@ let clockBox = document.getElementById("clockBox");
 let speed = 1;
 let x = 0;
 let currentFontSize = 16;
-let currentText = "خبر عاجل: أهلاً بك في نشرة الأخبار";
+let currentText = "قداس احد الشعانين 2026 بكنيسة القديس العظيم ابو فانا والانبا ابرام";
 
 /* تحميل */
 function loadSettings() {
@@ -265,8 +270,8 @@ function changeFontSize() {
 function updateClock() {
     let now = new Date();
 
-    let time = now.toLocaleTimeString("ar-EG");
-    let date = now.toLocaleDateString("ar-EG");
+let time = now.toLocaleTimeString("en-US");
+//    let date = now.toLocaleDateString("ar-EG");
 
     document.getElementById("time").innerText = time;
     document.getElementById("date").innerText = date;
