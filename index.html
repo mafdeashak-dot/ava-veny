@@ -127,35 +127,21 @@ button:hover {
     border-top:1px solid #333;
     color:#888;
 }
-    /* استجابة للشاشات الصغيرة */
+/* تصغير العناصر للشاشات الصغيرة دون تغيير الترتيب */
 @media screen and (max-width: 768px) {
-    #newsContainer {
-        flex-direction: column;
-        align-items: center;
-    }
-
     #clockBox {
         width: 120px;
         font-size: 14px;
-        border-radius: 14px 14px 0px 0px;
-        margin-bottom: 10px;
     }
 
     #newsBox {
-        width: 95%;
-        border-radius: 0px 0px 14px 14px;
-        padding: 8px 10px;
         font-size: 14px;
+        padding: 8px 10px;
     }
 
     .tickerItem {
         padding: 0 20px;
         gap: 10px;
-    }
-
-    .controls input, .controls select, .controls button {
-        width: 90%;
-        font-size: 14px;
     }
 
     #time {
@@ -166,16 +152,18 @@ button:hover {
         width:1.5em;
         height:1.5em;
     }
+
+    .controls input, .controls select, .controls button {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
 
-/* استجابة للشاشات الصغيرة جدًا مثل الهواتف 400px */
+/* تصغير إضافي جدًا للشاشات ≤400px */
 @media screen and (max-width: 400px) {
-    #newsContainer {
-        margin: 50px auto;
-    }
-
     #clockBox {
         width: 100px;
+        font-size: 12px;
     }
 
     #newsBox {
@@ -186,6 +174,15 @@ button:hover {
     .tickerItem {
         padding: 0 10px;
         gap: 5px;
+    }
+
+    #time {
+        font-size: 16px;
+    }
+
+    .logo {
+        width:1.2em;
+        height:1.2em;
     }
 }
 </style>
