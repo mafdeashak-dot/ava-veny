@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ابو فانا</title>
 <link rel="icon" type="image/png" href="logo.jpeg">
-
+<link href="https://fonts.googleapis.com/css2?family=Cairo&family=Amiri&family=Almarai&family=El+Messiri&display=swap" rel="stylesheet">
 <style>
 body {
     direction: rtl;
@@ -38,7 +38,7 @@ body {
 
 /* الحاوية */
 #newsContainer {
-    width: 95%;
+    width: 98%;
     margin: 100px auto;
     display: flex;
 }
@@ -127,6 +127,7 @@ button:hover {
     border-top:1px solid #333;
     color:#888;
 }
+
 /* تصغير العناصر للشاشات الصغيرة دون تغيير الترتيب */
 @media screen and (max-width: 768px) {
     #clockBox {
@@ -185,10 +186,28 @@ button:hover {
         height:1.2em;
     }
 }
+
+
 </style>
 </head>
 
 <body class="normal">
+
+
+<div id="newsContainer">
+
+<div id="clockBox">
+    <div id="time"></div>
+</div>
+
+<div id="newsBox">
+    <div id="tickerTrack">
+        <div class="tickerItem" id="content"></div>
+    </div>
+</div>
+
+</div>
+
 
 <div class="controls">
 
@@ -201,9 +220,23 @@ button:hover {
 <input type="number" id="heightInput" placeholder="ارتفاع">
 <button onclick="changeHeight()">تغيير الارتفاع</button><br>
 
+
 <input type="number" id="fontSizeInput" placeholder="حجم الخط">
 <button onclick="changeFontSize()">تغيير الخط</button><br>
 
+<label>شكل الفونت    :</label>
+<select id="fontFamilySelect" onchange="changeFontFamily()">
+<option value="Arial, sans-serif">Arial</option>
+<option value="Tahoma">Tahoma</option>
+<option value="Cairo, sans-serif">Cairo</option>
+<option value="Amiri, serif">Amiri</option>
+<option value="Almarai, sans-serif">Almarai</option>
+<option value="El Messiri, sans-serif">El Messiri</option>
+<option value="Georgia, serif">Georgia</option>
+</select>
+<br>
+
+<label>تغيير استايل الشريط   :</label>
 <select id="occasionSelect" onchange="changeOccasion()">
 <option value="normal">الوضع العادي</option>
 <option value="lent">الصيام</option>
@@ -221,19 +254,7 @@ button:hover {
 
 </div>
 
-<div id="newsContainer">
 
-<div id="clockBox">
-    <div id="time"></div>
-</div>
-
-<div id="newsBox">
-    <div id="tickerTrack">
-        <div class="tickerItem" id="content"></div>
-    </div>
-</div>
-
-</div>
 
 <div class="footer-bottom">
 Developed by mafde
@@ -243,7 +264,7 @@ Developed by mafde
 let track=document.getElementById("tickerTrack");
 let box=document.getElementById("newsBox");
 let clockBox=document.getElementById("clockBox");
-
+let currentFontFamily="Georgia, serif";
 let speed=1;
 let x=0;
 let currentFontSize=16;
@@ -274,6 +295,11 @@ function loadSettings(){
         box.style.color = localStorage.getItem("textColor");
         document.getElementById("textColorInput").value = localStorage.getItem("textColor");
     }
+    if(localStorage.getItem("fontFamily")){
+    currentFontFamily=localStorage.getItem("fontFamily");
+    box.style.fontFamily=currentFontFamily;
+    document.getElementById("fontFamilySelect").value=currentFontFamily;
+}
 }
 
 // حفظ الإعدادات
@@ -282,6 +308,7 @@ function saveSettings(){
     localStorage.setItem("speed",speed);
     localStorage.setItem("fontSize",currentFontSize);
     localStorage.setItem("height",box.offsetHeight);
+    localStorage.setItem("fontFamily",currentFontFamily);
 }
 
 // تغيير المناسبة مع تطبيق ألوانها دائمًا
@@ -423,6 +450,14 @@ function updateClock(){
     let now=new Date();
     let time=now.toLocaleTimeString("en-US");
     document.getElementById("time").innerText=time;
+}
+
+
+function changeFontFamily(){
+    let font=document.getElementById("fontFamilySelect").value;
+    currentFontFamily=font;
+    box.style.fontFamily=font;
+    saveSettings();
 }
 
 // تشغيل كل الوظائف
